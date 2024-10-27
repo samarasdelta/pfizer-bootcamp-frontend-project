@@ -10,7 +10,7 @@
             class="logo-image"
           />
         </div>
-        <h2 class="navbar-title">Research Products Dashboard</h2>
+        <h2 class="navbar-title text-center">Research Products Dashboard</h2>
       </nav>
     </header>
 
@@ -18,23 +18,58 @@
     <div class="container mt-4" style="max-width: 100%;">
       <h2 class="text-start mb-4">Research Products</h2>
 
-      <!-- Check if there are products to display -->
-      <template v-if="products.length > 0">
-        <!-- Products Table with Action Buttons -->
+      <!-- Desktop: Products Table -->
+      <div class="d-none d-md-block">
         <b-table striped hover :items="products" :fields="tableFields" responsive>
           <template #cell(actions)="data">
             <div class="btn-group" role="group" aria-label="Product Actions">
-              <button @click="viewProduct(data.item.id)" class="btn btn-outline-primary btn-sm">View</button>
-              <button @click="editProduct(data.item.id)" class="btn btn-outline-success btn-sm">Edit</button>
-              <button @click="deleteProduct(data.item.id)" class="btn btn-outline-danger btn-sm">Delete</button>
+              <button @click="viewProduct(data.item.id)" class="btn btn-outline-primary btn-sm">
+                View
+              </button>
+              <button @click="editProduct(data.item.id)" class="btn btn-outline-success btn-sm">
+                Edit
+              </button>
+              <button @click="deleteProduct(data.item.id)" class="btn btn-outline-danger btn-sm">
+                Delete
+              </button>
             </div>
           </template>
         </b-table>
-      </template>
+      </div>
 
-      <template v-else>
+      <!-- Mobile: Products as Cards -->
+      <div class="row d-md-none">
+        <div class="col-12 mb-3" v-for="(product, index) in products" :key="index">
+          <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+              {{ product.name }}
+            </div>
+            <div class="card-body">
+              <!-- <p><strong>Name:</strong> {{ product.name }}</p> -->
+              <p><strong>Category:</strong> {{ product.category }}</p>
+              <p><strong>Active Ingredients:</strong> {{ product.active_ingredients }}</p>
+              <p><strong>Research Status:</strong> {{ product.research_status }}</p>
+              <p><strong>Batch Number:</strong> {{ product.batch_number }}</p>
+              <p><strong>Manufacturing Date:</strong> {{ product.manufacturing_date }}</p>
+              <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
+              
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+              <button @click="viewProduct(product.id)" class="btn btn-outline-primary btn-sm">View</button>
+              <button @click="editProduct(product.id)" class="btn btn-outline-success btn-sm">Edit</button>
+              <button @click="deleteProduct(product.id)" class="btn btn-outline-danger btn-sm">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Products Available Message -->
+      <template v-if="!loading && products.length === 0">
         <p class="text-center">No Products Available</p>
       </template>
+
+      <!-- Loading Message -->
+      <p v-if="loading" class="text-center">Products loading...</p>
 
       <!-- Add Product Button -->
       <div class="d-flex justify-content-end mt-3">

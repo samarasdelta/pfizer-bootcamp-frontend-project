@@ -49,3 +49,10 @@ header {
   color: #666; /* Grey color */
   margin-top: 20px; /* Add margin for spacing */
 }
+
+
+@media (max-width: 768px) {
+  .card-header {
+    font-size: 1.2rem;
+  }
+}

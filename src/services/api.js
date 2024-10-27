@@ -49,7 +49,13 @@ export default {
       },
       body: JSON.stringify(product),
     });
-    return response.json();
+    if (!response.ok) {
+      const errorData = await response.json();  // Extract JSON error data
+      throw new Error(JSON.stringify(errorData.errors) || 'An error occurred while adding the product.');  // Pass the error message to the caller
+    }
+  
+    return await response.json();
+    
   },
 
   async deleteProduct(id) {

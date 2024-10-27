@@ -214,7 +214,7 @@ export default {
             await ApiService.updateProduct(this.$route.params.id, this.product);
           } else {
             await ApiService.addProduct(this.product);
-            this.$router.push({ name: 'ProductList' });
+            
           }
           
           // Redirect to home on successful update

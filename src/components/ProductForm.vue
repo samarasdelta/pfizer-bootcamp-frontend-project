@@ -21,7 +21,7 @@
       <form @submit.prevent="submitForm" class="product-form">
         <!-- Name input -->
         <div class="mb-3">
-          <label for="name" class="form-label">Name:</label>
+          <label for="name" class="form-label">Name</label>
           <input 
             type="text" 
             id="name" 
@@ -33,14 +33,11 @@
             aria-describedby="nameHelp"
           >
           <div v-if="v$.product.name.$error" class="invalid-feedback">Product Name is required.</div>
-          <small id="nameHelp" class="form-text text-muted">
-            Please provide a name for the product.
-          </small>
         </div>
 
         <!-- Category input -->
         <div class="mb-3">
-          <label for="category" class="form-label">Category:</label>
+          <label for="category" class="form-label">Category</label>
           <select 
             v-model="product.category" 
             id="category" 
@@ -48,7 +45,7 @@
             @change="v$.product.category.$touch()"
             aria-describedby="categoryHelp"
           >
-            <option value="" disabled selected>Select a category</option> <!-- Placeholder option -->
+            <option value="" disabled selected>Select a category</option>
             <option value="Painkillers">Painkillers</option>
             <option value="Opioids">Opioids</option>
             <option value="NSAIDs">NSAIDs</option>
@@ -56,14 +53,11 @@
             <option value="Steroids">Steroids</option>
           </select>
           <div v-if="v$.product.category.$error" class="invalid-feedback">Category is required.</div>
-          <small id="categoryHelp" class="form-text text-muted">
-            Please select a category that best fits the product.
-          </small>
         </div>
 
         <!-- Active Ingredients input -->
         <div class="mb-3">
-          <label for="active_ingredients" class="form-label">Active Ingredients:</label>
+          <label for="active_ingredients" class="form-label">Active Ingredients</label>
           <input 
             type="text" 
             id="active_ingredients" 
@@ -73,17 +67,13 @@
             aria-describedby="activeIngredientsHelp"
             placeholder="e.g., Acetaminophen, Ibuprofen"
           >
-          <div v-if="v$.product.active_ingredients.$error" class="invalid-feedback">
-            Active ingredients are required.
-          </div>
-          <small id="activeIngredientsHelp" class="form-text text-muted">
-            Enter the active ingredients of the product, separated by commas.
-          </small>
+          <div v-if="v$.product.active_ingredients.$error" class="invalid-feedback">Active ingredients are required.</div>
+          <small id="activeIngredientsHelp" class="form-text text-muted">Enter the active ingredients of the product, separated by commas.</small>
         </div>
 
         <!-- Research Status input -->
         <div class="mb-3">
-          <label for="research_status" class="form-label">Research Status:</label>
+          <label for="research_status" class="form-label">Research Status</label>
           <select 
             v-model="product.research_status" 
             id="research_status" 
@@ -91,22 +81,17 @@
             @change="v$.product.research_status.$touch()"
             aria-describedby="researchStatusHelp"
           >
-            <option value="" disabled>Select Research Status</option> <!-- Placeholder option -->
+            <option value="" disabled>Select Research Status</option>
             <option value="Approved">Approved</option>
             <option value="In Development">In Development</option>
             <option value="Experimental">Experimental</option>
           </select>
-          <div v-if="v$.product.research_status.$error" class="invalid-feedback">
-            Research status is required.
-          </div>
-          <small id="researchStatusHelp" class="form-text text-muted">
-            Select the current research status of the product.
-          </small>
+          <div v-if="v$.product.research_status.$error" class="invalid-feedback">Research status is required.</div>
         </div>
 
         <!-- Batch Number input -->
         <div class="mb-3">
-          <label for="batch_number" class="form-label">Batch Number:</label>
+          <label for="batch_number" class="form-label">Batch Number</label>
           <input 
             type="text" 
             id="batch_number" 
@@ -114,39 +99,39 @@
             :class="{ 'is-invalid': v$.product.batch_number.$error, 'form-control': true }" 
             @input="v$.product.batch_number.$touch()"
           />
-
-          <!-- Display error message if validation fails -->
-          <div v-if="v$.product.batch_number.$error" class="invalid-feedback">
-            <span v-if="v$.product.batch_number.$error.required">Batch number is required.</span>
-            <span v-else-if="v$.product.batch_number.$error.regex">Batch number must be in the correct format.</span>
-          </div>
-
-          <!-- Helper text for expected input format -->
-          <small class="form-text text-muted">
-            Enter the batch number in the format: <strong>ed-203-24-8</strong>.
-          </small>
+          <div v-if="v$.product.batch_number.$error" class="invalid-feedback">Batch number is required and must be in the correct format.</div>
+          <small class="form-text text-muted">Enter the batch number in the format: <strong>ed-203-24-8</strong>.</small>
         </div>
 
         <!-- Manufacturing Date input -->
         <div class="mb-3">
-          <label for="manufacturing_date" class="form-label">Manufacturing Date:</label>
-          <input type="date" id="manufacturing_date" v-model="product.manufacturing_date" 
-                 :class="{ 'is-invalid': v$.product.manufacturing_date.$error, 'form-control': true }" 
-                 @input="v$.product.manufacturing_date.$touch()">      
+          <label for="manufacturing_date" class="form-label">Manufacturing Date</label>
+          <input 
+            type="date" 
+            id="manufacturing_date" 
+            v-model="product.manufacturing_date" 
+            :class="{ 'is-invalid': v$.product.manufacturing_date.$error, 'form-control': true }" 
+            @input="v$.product.manufacturing_date.$touch()"
+          />      
           <div v-if="v$.product.manufacturing_date.$error" class="invalid-feedback">Manufacturing date is required and must be today or in the past.</div>
         </div>
 
         <!-- Expiration Date input -->
         <div class="mb-3">
-          <label for="expiration_date" class="form-label">Expiration Date:</label>
-          <input type="date" id="expiration_date" v-model="product.expiration_date" 
-                 :class="{ 'is-invalid': v$.product.expiration_date.$error, 'form-control': true }" 
-                 @input="v$.product.expiration_date.$touch()">
+          <label for="expiration_date" class="form-label">Expiration Date</label>
+          <input 
+            type="date" 
+            id="expiration_date" 
+            v-model="product.expiration_date" 
+            :class="{ 'is-invalid': v$.product.expiration_date.$error, 'form-control': true }" 
+            @input="v$.product.expiration_date.$touch()"
+          />
           <div v-if="v$.product.expiration_date.$error" class="invalid-feedback">Expiration date is required and must be after the Manufacturing Date.</div>
         </div>
 
         <!-- Error Message Display -->
         <div v-if="apiError" class="alert alert-danger">{{ apiError }}</div>
+        <div v-if="noChangesMessage" class="alert alert-warning">{{ noChangesMessage }}</div>
 
         <!-- Submit Button -->
         <div class="d-flex justify-content-end mt-3">
@@ -175,6 +160,8 @@ export default {
         expiration_date: ''
       },
       apiError: null,
+      noChangesMessage: null, // To show if there's nothing to update
+      originalProduct: {}, // To store original product data
       isEditMode: false
     };
   },
@@ -206,6 +193,7 @@ export default {
       try {
         const productData = await ApiService.getProduct(id);
         this.product = productData;
+        this.originalProduct = { ...productData }; // Store the original data for comparison
       } catch (error) {
         this.apiError = 'Failed to load product data for editing.';
       }
@@ -213,14 +201,24 @@ export default {
     async submitForm() {
       try {
         this.v$.$touch();
+        
         if (!this.v$.$invalid) {
+          // Check for changes
+          const isUnchanged = JSON.stringify(this.product) === JSON.stringify(this.originalProduct);
+          if (this.isEditMode && isUnchanged) {
+            this.noChangesMessage = "No changes detected. Please modify the fields to update.";
+            return; // Stop further processing
+          }
+          
           if (this.isEditMode) {
             await ApiService.updateProduct(this.$route.params.id, this.product);
-            this.$router.push({ name: 'ProductList' }); // Navigate to the product list after update
           } else {
             await ApiService.addProduct(this.product);
-            this.$router.push({ name: 'ProductList' }); // Navigate to the product list after adding a new product
+            this.$router.push({ name: 'ProductList' });
           }
+          
+          // Redirect to home on successful update
+          this.$router.push('/');
         }
       } catch (error) {
         this.apiError = error.message;
@@ -231,5 +229,5 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Add your custom styles here */
 </style>

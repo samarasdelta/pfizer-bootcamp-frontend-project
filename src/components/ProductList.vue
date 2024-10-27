@@ -15,7 +15,7 @@
     </header>
 
     <!-- Main Content Section -->
-    <div class="container mt-4">
+    <div class="container mt-4" style="max-width: 100%;">
       <h2 class="text-start mb-4">Research Products</h2>
 
       <!-- Check if there are products to display -->

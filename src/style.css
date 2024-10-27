@@ -1,125 +1,50 @@
 header {
   background-color: rgb(213, 211, 211);
   color: white;
-  padding: 10px 0;
-}
-
-.navbar {
-  display: flex;
-  justify-content: center;
-}
-
-.logo img {
-  height: 40px;
-  width: auto;
-}
-
-/* Todo list styles */
-#app {
-  font-family: Arial, sans-serif;
 }
 
 .container {
   margin: 20px auto;
-  max-width: 600px;
 }
 
-.title {
-  text-align: center;
-  font-size: 24px;
-  font-weight: bold;
-}
-
-hr {
-  border: 1px solid #ccc;
-}
-
-.input-group {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.form-control {
-  flex: 1;
+/* Custom Navbar Styling */
+.navbar-custom {
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-right: 10px;
+  color: white; /* This can remain since it's the only property */
 }
 
-.btn-success {
-  border-radius: 5px;
-  padding: 10px 20px;
-  background-color: #0500c9;
+/* Navbar Title Styling */
+.navbar-title {
+  font-size: 1.5rem;
   color: white;
-  border: none;
-  cursor: pointer;
+  margin: 0;
 }
 
-.todo-table {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  overflow: hidden;
-}
-
-.table-header {
-  display: flex;
-  background-color: #f0f0f0;
-  padding: 10px;
-}
-
-.table-cell {
-  flex: 1;
-  padding: 10px;
-  font-size: 18px;
-}
-
-.table-body {
-  display: grid;
-}
-
-.table-row {
-  display: flex;
-  border-top: 1px solid #ccc;
-}
-
-.even-row {
+/* Card Styling */
+.card {
   background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.completed {
-  text-decoration: line-through;
+/* Logo Image Styling */
+.logo-image {
+  width: 120px;
+  height: auto;
 }
 
-.completed-cell {
-  color: #888;
-}
-
-.btn {
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+/* Button Group Styling */
+.btn-group .btn {
+  margin-right: 4px;
 }
 
 .btn-primary {
-  background-color: #007bff;
-  color: white;
-  border: none;
+  font-weight: bold;
 }
 
-.btn-info {
-  background-color: #17a2b8;
-  color: white;
-  border: none;
-}
-
-.btn-danger {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-}
-button {
-  margin-left: 3px;
+.text-center {
+  text-align: center;
+  font-size: 1.25rem; /* Increase font size */
+  color: #666; /* Grey color */
+  margin-top: 20px; /* Add margin for spacing */
 }

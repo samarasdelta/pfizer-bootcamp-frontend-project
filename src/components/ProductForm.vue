@@ -258,7 +258,7 @@ export default {
         }
       } catch (error) {
         this.apiError = error.message;
-        toast.error("Failed to submit product data. Please try again.");
+        toast.error(this.apiError);
       }
     }
   }

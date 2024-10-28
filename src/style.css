@@ -7,13 +7,11 @@ header {
   margin: 20px auto;
 }
 
-/* Custom Navbar Styling */
 .navbar-custom {
   padding: 10px;
-  color: white; /* This can remain since it's the only property */
+  color: white;
 }
 
-/* Navbar Title Styling */
 .navbar-title {
   font-size: 2vmax;
   color: white;
@@ -21,20 +19,17 @@ header {
   text-align: end;
 }
 
-/* Card Styling */
 .card {
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Logo Image Styling */
 .logo-image {
   width: 120px;
   height: auto;
 }
 
-/* Button Group Styling */
 .btn-group .btn {
   margin-right: 4px;
 }
@@ -44,15 +39,12 @@ header {
 }
 
 .text-center {
-  text-align: center;
-  font-size: 1.25rem; /* Increase font size */
-  color: #666; /* Grey color */
-  margin-top: 20px; /* Add margin for spacing */
+  font-size: 1.25rem;
 }
 
 
 @media (max-width: 768px) {
   .card-header {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 }

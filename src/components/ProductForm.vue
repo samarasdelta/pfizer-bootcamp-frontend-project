@@ -11,7 +11,7 @@
             />
           </router-link>
         </div>
-        <h2 class="navbar-title">Research Products Dashboard</h2>
+        <h2 class="navbar-title text-center">Research Products Dashboard</h2>
       </nav>
     </header>
 
@@ -30,7 +30,6 @@
             @input="v$.product.name.$touch()" 
             placeholder="Enter Product Name"
             maxlength="50"
-            aria-describedby="nameHelp"
           >
           <div v-if="v$.product.name.$error" class="invalid-feedback">Product Name is required.</div>
         </div>
@@ -43,7 +42,6 @@
             id="category" 
             :class="{ 'is-invalid': v$.product.category.$error, 'form-select': true }" 
             @change="v$.product.category.$touch()"
-            aria-describedby="categoryHelp"
           >
             <option value="" disabled selected>Select a category</option>
             <option value="Painkillers">Painkillers</option>
@@ -64,11 +62,10 @@
             v-model="product.active_ingredients" 
             :class="{ 'is-invalid': v$.product.active_ingredients.$error, 'form-control': true }" 
             @input="v$.product.active_ingredients.$touch()"
-            aria-describedby="activeIngredientsHelp"
             placeholder="e.g., Acetaminophen, Ibuprofen"
           >
           <div v-if="v$.product.active_ingredients.$error" class="invalid-feedback">Active ingredients are required.</div>
-          <small id="activeIngredientsHelp" class="form-text text-muted">Enter the active ingredients of the product, separated by commas.</small>
+          <small class="form-text text-muted">Enter the active ingredients of the product, separated by commas.</small>
         </div>
 
         <!-- Research Status input -->
@@ -79,7 +76,6 @@
             id="research_status" 
             :class="{ 'is-invalid': v$.product.research_status.$error, 'form-select': true }" 
             @change="v$.product.research_status.$touch()"
-            aria-describedby="researchStatusHelp"
           >
             <option value="" disabled>Select Research Status</option>
             <option value="Approved">Approved</option>
@@ -129,11 +125,6 @@
           <div v-if="v$.product.expiration_date.$error" class="invalid-feedback">Expiration date is required and must be after the Manufacturing Date.</div>
         </div>
 
-        <!-- Error Message Display -->
-        <div v-if="apiError" class="alert alert-danger">{{ apiError }}</div>
-        <div v-if="noChangesMessage" class="alert alert-warning">{{ noChangesMessage }}</div>
-
-        <!-- Submit Button -->
         <div class="d-flex justify-content-end mt-3">
           <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
         </div>
@@ -145,7 +136,13 @@
 <script>
 import ApiService from '../services/api';
 import useVuelidate from '@vuelidate/core';
-import { required } from '@vuelidate/validators';
+import { required, helpers } from '@vuelidate/validators';
+import { toast } from 'vue3-toastify';
+
+const isPastOrToday = helpers.withMessage(
+  "Manufacturing date must be today or in the past.",
+  (value) => !value || new Date(value) <= new Date()
+);
 
 export default {
   data() {
@@ -160,8 +157,8 @@ export default {
         expiration_date: ''
       },
       apiError: null,
-      noChangesMessage: null, // To show if there's nothing to update
-      originalProduct: {}, // To store original product data
+      noChangesMessage: null,
+      originalProduct: {}, 
       isEditMode: false
     };
   },
@@ -179,8 +176,20 @@ export default {
         active_ingredients: { required },
         research_status: { required },
         batch_number: { required },
-        manufacturing_date: { required },
-        expiration_date: { required }
+        manufacturing_date: { required, isPastOrToday },
+        expiration_date: { 
+          required, 
+          isFutureAndAfterManufacturingDate: helpers.withMessage(
+            "Expiration date must be after the manufacturing date and in the future.",
+            (value) => {
+              const manufacturingDate = this.product.manufacturing_date;
+              return (
+                !value ||
+                (new Date(value) > new Date(manufacturingDate))
+              );
+            }
+          )
+        }
       }
     };
   },
@@ -188,46 +197,76 @@ export default {
     const v$ = useVuelidate();
     return { v$ };
   },
+  watch: {
+    'product.manufacturing_date'() {
+      this.v$.product.expiration_date.$touch();
+    }
+  },
   methods: {
     async fetchProduct(id) {
       try {
         const productData = await ApiService.getProduct(id);
+        
+        // Ensure date fields are formatted as YYYY-MM-DD for compatibility with input[type="date"]
+        productData.manufacturing_date = this.formatDateForInput(productData.manufacturing_date);
+        productData.expiration_date = this.formatDateForInput(productData.expiration_date);
+
         this.product = productData;
-        this.originalProduct = { ...productData }; // Store the original data for comparison
+        this.originalProduct = { ...productData };  // For tracking changes
       } catch (error) {
         this.apiError = 'Failed to load product data for editing.';
+        toast.error(this.apiError);
       }
     },
+    
+    // Utility function to convert date to YYYY-MM-DD format
+    formatDateForInput(date) {
+      if (!date) return '';
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    },
+
     async submitForm() {
       try {
         this.v$.$touch();
-        
+
         if (!this.v$.$invalid) {
-          // Check for changes
           const isUnchanged = JSON.stringify(this.product) === JSON.stringify(this.originalProduct);
           if (this.isEditMode && isUnchanged) {
             this.noChangesMessage = "No changes detected. Please modify the fields to update.";
-            return; // Stop further processing
+            toast.warning(this.noChangesMessage);
+            return;
           }
           
           if (this.isEditMode) {
             await ApiService.updateProduct(this.$route.params.id, this.product);
+            toast.success("Product updated successfully!");
           } else {
             await ApiService.addProduct(this.product);
-            
+            toast.success("Product added successfully!");
           }
           
-          // Redirect to home on successful update
-          this.$router.push('/');
+          setTimeout(() => {
+            if (this.$route.name === 'ProductEdit' || this.$route.name === 'ProductForm') {
+              this.$router.push('/');
+            }
+          }, 3000);
         }
       } catch (error) {
         this.apiError = error.message;
+        toast.error("Failed to submit product data. Please try again.");
       }
     }
   }
+
 };
 </script>
 
+
+
 <style scoped>
-/* Add your custom styles here */
+
 </style>

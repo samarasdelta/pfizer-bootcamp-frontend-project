@@ -11,7 +11,7 @@
             />
           </router-link>
         </div>
-        <h2 class="navbar-title">Research Products Dashboard</h2>
+        <h2 class="navbar-title text-center">Research Products Dashboard</h2>
       </nav>
     </header>
 
@@ -41,15 +41,16 @@
           <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
         </div>
 
-        <div class="d-flex justify-content-between">
+        <div class="gap-2 d-md-flex justify-content-md-end">
           <button 
             @click="$router.push({ name: 'ProductEdit', params: { id: product.id } })" 
-            class="btn btn-primary">
+            class="btn btn-primary d-start">
             Edit
           </button>
+          <button @click="deleteProduct(product.id)" class="btn btn-outline-danger btn-sm">Delete</button>
           <button 
             @click="$router.push({ name: 'ProductList' })" 
-            class="btn btn-secondary">
+            class="btn btn-outline-secondary">
             Back to List
           </button>
         </div>
@@ -60,6 +61,7 @@
 
 <script>
 import ApiService from '../services/api';
+import { toast } from 'vue3-toastify';
 
 export default {
   data() {
@@ -74,6 +76,23 @@ export default {
     async fetchProduct(id) {
       this.product = await ApiService.getProduct(id);
     },
+    async deleteProduct(id) {
+      try {
+        await ApiService.deleteProduct(id);
+        toast.success("Product deleted successfully!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          if (this.$route.name === 'ProductDetails') {
+            this.$router.push('/');
+          }
+        }, 3000);
+      } catch (error) {
+        toast.error("Failed to delete the product.");
+        console.error("Error deleting product:", error);
+      }
+    }
   },
 };
 </script>

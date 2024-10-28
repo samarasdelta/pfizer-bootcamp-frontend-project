@@ -1,6 +1,4 @@
-// src/services/api.js
-
-const API_BASE_URL = 'http://localhost/api'; // Update with your API URL if needed
+const API_BASE_URL = 'http://localhost/api';
 
 export default {
   async getProducts() {
@@ -33,8 +31,8 @@ export default {
     });
 
     if (!response.ok) {
-      const errorData = await response.json();  // Extract JSON error data
-      throw new Error(JSON.stringify(errorData.errors) || 'An error occurred while adding the product.');  // Pass the error message to the caller
+      const errorData = await response.json();  
+      throw new Error(JSON.stringify(errorData.errors) || 'An error occurred while adding the product.');
     }
   
     return await response.json();
@@ -50,8 +48,8 @@ export default {
       body: JSON.stringify(product),
     });
     if (!response.ok) {
-      const errorData = await response.json();  // Extract JSON error data
-      throw new Error(JSON.stringify(errorData.errors) || 'An error occurred while adding the product.');  // Pass the error message to the caller
+      const errorData = await response.json();
+      throw new Error(JSON.stringify(errorData.errors) || 'An error occurred while adding the product.'); 
     }
   
     return await response.json();

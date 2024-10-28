@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <!-- Header with custom navbar and logo -->
     <header>
       <nav class="navbar-custom d-flex align-items-center justify-content-between p-3">
         <div class="logo">
@@ -14,11 +13,9 @@
       </nav>
     </header>
 
-    <!-- Main Content Section -->
     <div class="container mt-4" style="max-width: 100%;">
       <h2 class="text-start mb-4">Research Products</h2>
 
-      <!-- Desktop: Products Table -->
       <div class="d-none d-md-block">
         <b-table striped hover :items="products" :fields="tableFields" responsive>
           <template #cell(actions)="data">
@@ -45,14 +42,12 @@
               {{ product.name }}
             </div>
             <div class="card-body">
-              <!-- <p><strong>Name:</strong> {{ product.name }}</p> -->
               <p><strong>Category:</strong> {{ product.category }}</p>
               <p><strong>Active Ingredients:</strong> {{ product.active_ingredients }}</p>
               <p><strong>Research Status:</strong> {{ product.research_status }}</p>
               <p><strong>Batch Number:</strong> {{ product.batch_number }}</p>
               <p><strong>Manufacturing Date:</strong> {{ product.manufacturing_date }}</p>
               <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
-              
             </div>
             <div class="card-footer d-flex justify-content-between">
               <button @click="viewProduct(product.id)" class="btn btn-outline-primary btn-sm">View</button>
@@ -63,15 +58,12 @@
         </div>
       </div>
 
-      <!-- No Products Available Message -->
       <template v-if="!loading && products.length === 0">
         <p class="text-center">No Products Available</p>
       </template>
 
-      <!-- Loading Message -->
       <p v-if="loading" class="text-center">Products loading...</p>
 
-      <!-- Add Product Button -->
       <div class="d-flex justify-content-end mt-3">
         <button @click="goToAddProduct" class="btn btn-primary">Add Product</button>
       </div>
@@ -81,11 +73,13 @@
 
 <script>
 import ApiService from '../services/api';
+import { toast } from 'vue3-toastify';
 
 export default {
   data() {
     return {
       products: [],
+      loading: false,
       tableFields: [
         { key: 'name', label: 'Name' },
         { key: 'category', label: 'Category' },
@@ -103,11 +97,23 @@ export default {
   },
   methods: {
     async fetchProducts() {
-      this.products = await ApiService.getProducts();
+      try {
+        this.loading = true;
+        this.products = await ApiService.getProducts();
+      } catch (error) {
+        toast.error("Failed to load products. Please try again.");
+      } finally {
+        this.loading = false;
+      }
     },
     async deleteProduct(id) {
-      await ApiService.deleteProduct(id);
-      this.fetchProducts();
+      try {
+        await ApiService.deleteProduct(id);
+        toast.success("Product deleted successfully!");
+        this.fetchProducts();
+      } catch (error) {
+        toast.error("Failed to delete the product.");
+      }
     },
     editProduct(id) {
       if (id) {

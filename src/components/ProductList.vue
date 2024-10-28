@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <!-- Header Section with Custom Navbar and Logo -->
     <header>
       <nav class="navbar-custom d-flex align-items-center justify-content-between p-3">
+        <!-- Logo linking to the homepage -->
         <div class="logo">
           <img
             src="https://www.pfizer.at/images/custom/Pfizer_Logo_Color_RGB.png"
@@ -13,9 +15,10 @@
       </nav>
     </header>
 
+    <!-- Main Section -->
     <div class="container mt-4" style="max-width: 100%;">
       <h2 class="text-start mb-4">Research Products</h2>
-
+      <!-- Main List Output -->
       <div class="d-none d-md-block">
         <b-table striped hover :items="products" :fields="tableFields" responsive>
           <template #cell(actions)="data">

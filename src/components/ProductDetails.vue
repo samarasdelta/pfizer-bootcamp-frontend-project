@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <!-- Header Section with Custom Navbar and Logo -->
     <header>
       <nav class="navbar-custom d-flex align-items-center justify-content-between p-3">
+        <!-- Logo linking to the homepage -->
         <div class="logo">
           <router-link to="/">
             <img
@@ -15,6 +17,7 @@
       </nav>
     </header>
 
+    <!-- Main Section -->
     <div class="container mt-4">
       <h2 class="text-start mb-4">Product Details</h2>
 
@@ -86,6 +89,7 @@ export default {
     this.fetchProduct(this.$route.params.id);
   },
   methods: {
+    // Get Product by id to be displayed
     async fetchProduct(id) {
       this.product = await ApiService.getProduct(id);
     },

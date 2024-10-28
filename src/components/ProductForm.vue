@@ -1,7 +1,9 @@
 <template>
   <div id="app">
+    <!-- Header Section with Custom Navbar and Logo -->
     <header>
       <nav class="navbar-custom d-flex align-items-center justify-content-between p-3">
+        <!-- Logo linking to the homepage -->
         <div class="logo">
           <router-link to="/">
             <img
@@ -17,6 +19,7 @@
 
     <!-- Main Form Section -->
     <div class="form-container container mt-4">
+      <!-- Different Display for Add and Edit -->
       <h2 class="text-start mb-4">{{ isEditMode ? 'Edit Product' : 'Add New Product' }}</h2>
       <form @submit.prevent="submitForm" class="product-form">
         <!-- Name input -->
@@ -125,7 +128,7 @@
             <div v-if="v$.product.expiration_date.$error" class="invalid-feedback">Expiration date is required and must be after the Manufacturing Date.</div>
           </div>
         </div>
-
+        <!-- Different Display for Add and Edit -->
         <div class="d-flex justify-content-end mt-3">
           <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update Product' : 'Add Product' }}</button>
         </div>
@@ -164,6 +167,7 @@ export default {
     };
   },
   created() {
+    // Check if Edit Form
     this.isEditMode = Boolean(this.$route.params.id);
     if (this.isEditMode) {
       this.fetchProduct(this.$route.params.id);
@@ -207,7 +211,7 @@ export default {
     async fetchProduct(id) {
       try {
         const productData = await ApiService.getProduct(id);
-        
+
         // Ensure date fields are formatted as YYYY-MM-DD for compatibility with input[type="date"]
         productData.manufacturing_date = this.formatDateForInput(productData.manufacturing_date);
         productData.expiration_date = this.formatDateForInput(productData.expiration_date);
@@ -232,8 +236,10 @@ export default {
 
     async submitForm() {
       try {
+        // Trigger Form Validation
         this.v$.$touch();
-
+        
+        // Procide Only If No Validation Errors
         if (!this.v$.$invalid) {
           const isUnchanged = JSON.stringify(this.product) === JSON.stringify(this.originalProduct);
           if (this.isEditMode && isUnchanged) {
@@ -242,6 +248,7 @@ export default {
             return;
           }
           
+          // Determine whether to update an existing product or add a new one
           if (this.isEditMode) {
             await ApiService.updateProduct(this.$route.params.id, this.product);
             toast.success("Product updated successfully!");
@@ -250,6 +257,7 @@ export default {
             toast.success("Product added successfully!");
           }
           
+          // Redirect to Home Page after delay
           setTimeout(() => {
             if (this.$route.name === 'ProductEdit' || this.$route.name === 'ProductForm') {
               this.$router.push('/');

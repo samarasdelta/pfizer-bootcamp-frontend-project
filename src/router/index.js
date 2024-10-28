@@ -4,6 +4,7 @@ import ProductForm from '../components/ProductForm.vue';
 import ProductDetails from '../components/ProductDetails.vue';
 import NotFound from '../components/NotFound.vue';
 
+// Routes configuration
 const routes = [
     { path: '/', name: 'ProductList', component: ProductList },
     { path: '/product/add', name: 'ProductForm', component: ProductForm },
@@ -12,6 +13,7 @@ const routes = [
     { path: '/:catchAll(.*)', name: 'NotFound', component: NotFound },
 ];
 
+// Create a Vue Router
 const router = createRouter({
   history: createWebHistory(),
   routes,

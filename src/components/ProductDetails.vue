@@ -41,7 +41,7 @@
           <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
         </div>
 
-        <div class="gap-2 d-md-flex justify-content-md-end">
+        <div class="gap-2 d-flex justify-content-sm-end">
           <button 
             @click="$router.push({ name: 'ProductEdit', params: { id: product.id } })" 
             class="btn btn-primary d-start">

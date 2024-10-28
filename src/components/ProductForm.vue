@@ -99,30 +99,31 @@
           <small class="form-text text-muted">Enter the batch number in the format: <strong>ed-203-24-8</strong>.</small>
         </div>
 
-        <!-- Manufacturing Date input -->
-        <div class="mb-3">
-          <label for="manufacturing_date" class="form-label">Manufacturing Date</label>
-          <input 
-            type="date" 
-            id="manufacturing_date" 
-            v-model="product.manufacturing_date" 
-            :class="{ 'is-invalid': v$.product.manufacturing_date.$error, 'form-control': true }" 
-            @input="v$.product.manufacturing_date.$touch()"
-          />      
-          <div v-if="v$.product.manufacturing_date.$error" class="invalid-feedback">Manufacturing date is required and must be today or in the past.</div>
-        </div>
+        <!-- Manufacturing and Expiration Date inputs in one row -->
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="manufacturing_date" class="form-label">Manufacturing Date</label>
+            <input 
+              type="date" 
+              id="manufacturing_date" 
+              v-model="product.manufacturing_date" 
+              :class="{ 'is-invalid': v$.product.manufacturing_date.$error, 'form-control': true }" 
+              @input="v$.product.manufacturing_date.$touch()"
+            />      
+            <div v-if="v$.product.manufacturing_date.$error" class="invalid-feedback">Manufacturing date is required and must be today or in the past.</div>
+          </div>
 
-        <!-- Expiration Date input -->
-        <div class="mb-3">
-          <label for="expiration_date" class="form-label">Expiration Date</label>
-          <input 
-            type="date" 
-            id="expiration_date" 
-            v-model="product.expiration_date" 
-            :class="{ 'is-invalid': v$.product.expiration_date.$error, 'form-control': true }" 
-            @input="v$.product.expiration_date.$touch()"
-          />
-          <div v-if="v$.product.expiration_date.$error" class="invalid-feedback">Expiration date is required and must be after the Manufacturing Date.</div>
+          <div class="col-md-6 mb-3">
+            <label for="expiration_date" class="form-label">Expiration Date</label>
+            <input 
+              type="date" 
+              id="expiration_date" 
+              v-model="product.expiration_date" 
+              :class="{ 'is-invalid': v$.product.expiration_date.$error, 'form-control': true }" 
+              @input="v$.product.expiration_date.$touch()"
+            />
+            <div v-if="v$.product.expiration_date.$error" class="invalid-feedback">Expiration date is required and must be after the Manufacturing Date.</div>
+          </div>
         </div>
 
         <div class="d-flex justify-content-end mt-3">

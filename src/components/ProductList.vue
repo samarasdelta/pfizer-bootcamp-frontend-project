@@ -49,7 +49,7 @@
               <p><strong>Manufacturing Date:</strong> {{ product.manufacturing_date }}</p>
               <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
             </div>
-            <div class="card-footer d-flex justify-content-between">
+            <div class="card-footer d-flex gap-2 justify-content-end">
               <button @click="viewProduct(product.id)" class="btn btn-outline-primary btn-sm">View</button>
               <button @click="editProduct(product.id)" class="btn btn-outline-success btn-sm">Edit</button>
               <button @click="deleteProduct(product.id)" class="btn btn-outline-danger btn-sm">Delete</button>

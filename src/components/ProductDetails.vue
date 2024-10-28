@@ -18,33 +18,46 @@
     <div class="container mt-4">
       <h2 class="text-start mb-4">Product Details</h2>
 
+      <!-- Product Details Table -->
       <div class="card p-4">
-        <div class="mb-3">
-          <p><strong>Name:</strong> {{ product.name }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Category:</strong> {{ product.category }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Active Ingredients:</strong> {{ product.active_ingredients }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Research Status:</strong> {{ product.research_status }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Batch Number:</strong> {{ product.batch_number }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Manufacturing Date:</strong> {{ product.manufacturing_date }}</p>
-        </div>
-        <div class="mb-3">
-          <p><strong>Expiration Date:</strong> {{ product.expiration_date }}</p>
-        </div>
+        <table responsive class="table table-bordered table-striped">
+          <tbody>
+            <tr>
+              <th scope="row">Name</th>
+              <td>{{ product.name }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Category</th>
+              <td>{{ product.category }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Active Ingredients</th>
+              <td>{{ product.active_ingredients }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Research Status</th>
+              <td>{{ product.research_status }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Batch Number</th>
+              <td>{{ product.batch_number }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Manufacturing Date</th>
+              <td>{{ product.manufacturing_date }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Expiration Date</th>
+              <td>{{ product.expiration_date }}</td>
+            </tr>
+          </tbody>
+        </table>
 
+        <!-- Action Buttons -->
         <div class="gap-2 d-flex justify-content-sm-end">
           <button 
             @click="$router.push({ name: 'ProductEdit', params: { id: product.id } })" 
-            class="btn btn-primary d-start">
+            class="btn btn-primary">
             Edit
           </button>
           <button @click="deleteProduct(product.id)" class="btn btn-outline-danger btn-sm">Delete</button>
